@@ -15,14 +15,10 @@ def main():
                 continue
             # get user input between 0 and 5
             voltage = float(user_input)
-            voltage = voltage * 1.085
-            # divide by three
-            # split into number and decimal
-            voltage = str(voltage).split(".")
-            # format with only up to two decimal places
-            voltage = f'{voltage[0]}.{voltage[1][:2]}'
-            if 0 <= float(voltage) <= 5:
-                arduino.write(voltage.encode())
+            if 0 <= voltage <= 4.61:
+                voltage = voltage * 1.085
+                voltage_str = f'{voltage:.2f}'
+                arduino.write(voltage_str.encode())
 
                 # Wait for the validation message from the Arduino
                 validation_message = arduino.readline().decode().strip()
