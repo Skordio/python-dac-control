@@ -3,7 +3,7 @@
 
 Adafruit_MCP4725 dac;
 const int potPin = A0;
-bool potMode = false;
+bool potMode = true;
 
 void setup() {
   Serial.begin(9600);
@@ -49,9 +49,9 @@ void usePotentiometer() {
 
 int mapPotValue(int potValue) {
   // Assuming a logarithmic potentiometer with 10% to 90% mapping
-  const int minPotValue = (1023 * 10) / 100;
-  const int maxPotValue = (1023 * 90) / 100;
+  const int minPotValue = 0;
+  const int maxPotValue = 1500;
 
-  int mappedValue = map(potValue, 0, 1023, minPotValue, maxPotValue);
+  int mappedValue = map(potValue, 0, 1500, minPotValue, maxPotValue);
   return mappedValue;
 }
