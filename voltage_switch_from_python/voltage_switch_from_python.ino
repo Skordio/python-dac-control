@@ -16,11 +16,15 @@ void loop() {
 }
 
 void setDACVoltage(float voltage) {
-  uint16_t dacValue = (voltage * 4095.0) / 5;
+  // Update the voltage reference to 5V
+  uint16_t dacValue = (voltage * 4095.0) / 5.0;
 
   if (dacValue > 4095) {
     dacValue = 4095;
   }
 
   dac.setVoltage(dacValue, false);
+  Serial.print("Voltage updated to ");
+  Serial.print((voltage / 1.085));
+  Serial.println(" V.");
 }
