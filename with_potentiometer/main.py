@@ -24,7 +24,9 @@ def main():
                     voltage *= 1.085
                     voltage_str = f'{voltage:.2f}'
                     arduino.write(voltage_str.encode())
-                    print(f"Voltage updated to {voltage / 1.085:.2f} V.")
+                    
+                    validation_message = arduino.readline().decode().strip()
+                    print(f"{validation_message}")
                 else:
                     raise ValueError()
         except ValueError:
