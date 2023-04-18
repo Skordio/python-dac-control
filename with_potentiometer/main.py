@@ -9,7 +9,8 @@ def read_out(arduino):
 def main():
     # First value is Arduino's serial port identifier
     # (e.g., 'COM4' on Windows, '/dev/ttyACM0' or '/dev/ttyUSB0' on Linux)
-    arduino = serial.Serial('COM4', 9600)
+    from constants import arduino_com_val
+    arduino = serial.Serial(arduino_com_val, 9600)
     threading.Thread(None, read_out, 'arduino_out', arduino)
     time.sleep(2)  # Give the connection some time to establish
 

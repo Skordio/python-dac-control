@@ -53,7 +53,8 @@ def exit_program():
 
 # First value is Arduino's serial port identifier
 # (e.g., 'COM4' on Windows, '/dev/ttyACM0' or '/dev/ttyUSB0' on Linux)
-arduino = serial.Serial('COM4', 9600)
+from constants import arduino_com_val
+arduino = serial.Serial(arduino_com_val, 9600)
 time.sleep(2)
 
 root = tk.Tk()
