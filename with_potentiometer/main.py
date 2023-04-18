@@ -21,12 +21,13 @@ def main():
             else:
                 voltage = float(user_input)
                 if 0 <= voltage <= 4.61:
-                    voltage *= 1.085
+                    from constants import voltage_visual_offset
+                    voltage *= voltage_visual_offset
                     voltage_str = f'{voltage:.2f}'
                     arduino.write(voltage_str.encode())
                     
-                    validation_message = arduino.readline().decode().strip()
-                    print(f"{validation_message}")
+                    validation_voltage = arduino.readline().decode().strip()
+                    print(f"Voltage updated to {validation_voltage} V.")
                 else:
                     raise ValueError()
         except ValueError:

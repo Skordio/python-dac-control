@@ -4,6 +4,8 @@
 Adafruit_MCP4725 dac;
 const int potPin = A0;
 bool potMode = true;
+const int POT_MIN_VALUE = 0;
+const int POT_MAX_VALUE = 1500;
 
 void setup() {
   Serial.begin(9600);
@@ -42,16 +44,7 @@ void setDACVoltage(float voltage) {
 
 void usePotentiometer() {
   int potValue = analogRead(potPin);
-  int linearPotValue = mapPotValue(potValue);
+  int linearPotValue = map(potValue, 0, POT_MAX_VALUE, POT_MIN_VALUE, maxPotValue);
   float voltage = (linearPotValue * 5.0) / 1023.0;
   setDACVoltage(voltage);
-}
-
-int mapPotValue(int potValue) {
-  // Assuming a logarithmic potentiometer with 10% to 90% mapping
-  const int minPotValue = 0;
-  const int maxPotValue = 1500;
-
-  int mappedValue = map(potValue, 0, 1500, minPotValue, maxPotValue);
-  return mappedValue;
 }
