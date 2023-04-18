@@ -1,10 +1,16 @@
 import serial
 import time
+import threading
+
+def read_out(arduino):
+    while True:
+        print(arduino.readline().decode().strip())
 
 def main():
     # First value is Arduino's serial port identifier
     # (e.g., 'COM4' on Windows, '/dev/ttyACM0' or '/dev/ttyUSB0' on Linux)
     arduino = serial.Serial('COM4', 9600)
+    threading.Thread(None, read_out, 'arduino_out', arduino)
     time.sleep(2)  # Give the connection some time to establish
 
     while True:
@@ -25,10 +31,13 @@ def main():
                     voltage *= voltage_visual_offset
                     voltage_str = f'{voltage:.2f}'
                     arduino.write(voltage_str.encode())
-                    
-                    validation_voltage = float(arduino.readline().decode().strip())
-                    validation_voltage /= voltage_visual_offset
-                    print(f"Voltage updated to {validation_voltage} V.")
+                    arduino_output = arduino.readline().decode().strip()
+                    try:
+                        validation_voltage = float(arduino_output)
+                        validation_voltage /= voltage_visual_offset
+                        print(f"Voltage updated to {validation_voltage:.2f} V.")
+                    except ValueError:
+                        print(f"{arduino_output}")
                 else:
                     raise ValueError()
         except ValueError:
