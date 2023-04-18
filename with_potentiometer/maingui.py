@@ -24,8 +24,9 @@ def set_voltage(event=None):
                 voltage_str = f'{voltage:.2f}'
                 arduino.write(voltage_str.encode())
 
-                validation_voltage = arduino.readline().decode().strip()
-                messagebox.showinfo("Info", f"Voltage updated to {validation_voltage} V.")
+                validation_voltage = float(arduino.readline().decode().strip())
+                validation_voltage /= voltage_visual_offset
+                messagebox.showinfo("Info", f"Voltage updated to {validation_voltage:.2f} V.")
             else:
                 raise ValueError()
     except ValueError:
@@ -51,7 +52,8 @@ voltage_label.grid(row=0, column=0, padx=5, pady=5)
 
 voltage_entry = tk.Entry(frame)
 voltage_entry.grid(row=0, column=1, padx=5, pady=5)
-voltage_entry.bind('<Return>', set_voltage)
+voltage_entry.bind('<Return>', set_voltage) 
+voltage_entry.focus_set()
 
 set_voltage_button = tk.Button(frame, text="Click to set voltage (or press enter)", command=set_voltage)
 set_voltage_button.grid(row=1, column=0, padx=5, pady=5)

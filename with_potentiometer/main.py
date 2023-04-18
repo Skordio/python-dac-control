@@ -26,7 +26,8 @@ def main():
                     voltage_str = f'{voltage:.2f}'
                     arduino.write(voltage_str.encode())
                     
-                    validation_voltage = arduino.readline().decode().strip()
+                    validation_voltage = float(arduino.readline().decode().strip())
+                    validation_voltage /= voltage_visual_offset
                     print(f"Voltage updated to {validation_voltage} V.")
                 else:
                     raise ValueError()

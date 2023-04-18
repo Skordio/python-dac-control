@@ -21,9 +21,7 @@ void loop() {
       potMode = false;
       float voltage = command.toFloat();
       setDACVoltage(voltage);
-      Serial.print("Voltage updated to ");
-      Serial.print(voltage / 1.085, 2);
-      Serial.println(" V.");
+      Serial.println(voltage, 2);
     }
   }
 
@@ -44,7 +42,7 @@ void setDACVoltage(float voltage) {
 
 void usePotentiometer() {
   int potValue = analogRead(potPin);
-  int linearPotValue = map(potValue, 0, POT_MAX_VALUE, POT_MIN_VALUE, maxPotValue);
+  int linearPotValue = map(potValue, POT_MIN_VALUE, POT_MAX_VALUE, POT_MIN_VALUE, POT_MAX_VALUE);
   float voltage = (linearPotValue * 5.0) / 1023.0;
   setDACVoltage(voltage);
 }
