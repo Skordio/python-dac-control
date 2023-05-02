@@ -53,8 +53,19 @@ def exit_program():
 
 # First value is Arduino's serial port identifier
 # (e.g., 'COM4' on Windows, '/dev/ttyACM0' or '/dev/ttyUSB0' on Linux)
-from constants import arduino_com_val
-arduino = serial.Serial(arduino_com_val, 9600)
+from constants import arduino_com_val_1, arduino_com_val_2
+arduino = None
+try:
+    arduino = serial.Serial(arduino_com_val_1, 9600)
+except Exception:
+    try:
+        arduino = serial.Serial(arduino_com_val_2, 9600)
+    except Exception:
+        while arduino == None:
+            try:
+                arduino = serial.Serial(input(f"Could not locate arduino on {arduino_com_val_1} or {arduino_com_val_2}. Enter in COM[PORT] of arduino"), 9600)
+            except Exception:
+                pass
 time.sleep(2)
 
 root = tk.Tk()

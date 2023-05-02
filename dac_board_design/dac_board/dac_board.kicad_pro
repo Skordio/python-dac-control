@@ -321,11 +321,6 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [
-    [
-      "1921d6ec-7f4e-47dc-9f64-62cec94be977",
-      ""
-    ]
-  ],
+  "sheets": [],
   "text_variables": {}
 }
